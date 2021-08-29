@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>defineProperty</title>
+  </head>
+  <body>
+    <script type="module">
+      import { observe, $set } from "./defineReactive.js";
+      // 定义一个数据
+      let obj = {
+        msg: "未变动的数据",
+      };
+      observe(obj);
+      obj.msg = "数据变动了";
+
+      // 额外使用$set。 为什么需要呢，因为新的key没有被set/get提前劫持，所以直接赋值不会被感知
+      $set(obj, "foo", "这是额外数据啊");
+      obj.foo = "额外数据修改";
+      obj.foo;
+    </script>
+  </body>
+</html>

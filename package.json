@@ -1,0 +1,12 @@
+{
+  "name": "blog-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:tangjian1891/blog-example.git",
+  "author": "tangjian <tangjian1891@163.com>",
+  "license": "MIT",
+  "private":true,
+  "workspaces":[
+    "packages/*"
+  ]
+}
