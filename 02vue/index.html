@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mini-vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <div v-text="msg"></div>
+      <div v-html="msg2"></div>
+      {{msg}}
+    </div>
+    <script src="./mini-vue.js"></script>
+    <script>
+      // console.log(MiniVue);
+      let vm = new MiniVue({
+        el: "#app",
+        data: {
+          msg: "123",
+          msg2: "  <div style='color:red;' >数据呢</div>",
+        },
+      });
+    </script>
+  </body>
+</html>
