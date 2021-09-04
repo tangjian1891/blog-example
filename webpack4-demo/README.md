@@ -17,3 +17,6 @@ https://vue-loader.vuejs.org/zh/guide/#手动设置
 externals: {
 vue: "Vue", //key 是 package.json 中的依赖名，value 是实际使用的变量
 },
+
+
+8.在file-loader 5.0.0之后，已将esModule=true设置为默认值,在vue中src引入图片时，建议采用require('../image.png').default形式，否则会src="[object Module]" 找不到图片，且不能直接 src="../iamge.png，因为这种形式会转化为requre()但是没有default。

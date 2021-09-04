@@ -5,17 +5,20 @@
 // console.log(exec)
 // console.log(123);
 // console.log(json);
-// import image from "./assets/image.png";
+import image from "./assets/image.png";
 // let a = "qweer";
 // let b = "haha";
 // console.log(image);
 // console.log(haha);
 // console.log(path.resolve(a, b));
 // import Vue from 'vue'
-import './base.css'
+// import './base.css'
 import App from './App.vue'
- 
+// //  import path from 'path'
+const image2= require('./assets/image.png')
 
+console.log(image,'这是什么啊')
+console.log(image2,'这是什么啊')
 new Vue({
   el:"#app",
   render(h){

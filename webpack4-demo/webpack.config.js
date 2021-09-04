@@ -33,9 +33,19 @@ module.exports = {
           loader: "url-loader",
           options: {
             limit: false,
+            // esModule:false
           },
         },
       },
+      // {
+      //   test: /\.(png|jpg|gif)$/,
+      //   use: {
+      //     loader: "file-loader",
+      //     options: {
+           
+      //     },
+      //   },
+      // },
       {
         test: /\.exec\.js$/,
         use: "script-loader",
