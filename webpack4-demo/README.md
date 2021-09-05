@@ -20,3 +20,7 @@ vue: "Vue", //key 是 package.json 中的依赖名，value 是实际使用的变
 
 
 8.在file-loader 5.0.0之后，已将esModule=true设置为默认值,在vue中src引入图片时，建议采用require('../image.png').default形式，否则会src="[object Module]" 找不到图片，且不能直接 src="../iamge.png，因为这种形式会转化为requre()但是没有default。
+
+
+9.https://cli.vuejs.org/zh/guide/html-and-static-assets.html#url-转换规则
+别名@只在模板中，js引入中可以使用，  在css中是无法使用的。  如果使用 ~开头，后面的内容可以当模块解析

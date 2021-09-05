@@ -28,7 +28,7 @@ module.exports = {
         use: "raw-loader",
       },
       {
-        test: /\.(png|jpg|gif)$/,
+        test: /\.(png|jpg|gif|svg)$/,
         use: {
           loader: "url-loader",
           options: {
@@ -73,4 +73,10 @@ module.exports = {
   externals: {
     vue: "Vue",
   },
+  resolve:{
+    alias:{
+      '@':path.resolve(__dirname,'src'),
+      '@assets':path.resolve(__dirname,'src/assets')
+    }
+  }
 };

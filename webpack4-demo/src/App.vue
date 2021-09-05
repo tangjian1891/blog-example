@@ -4,7 +4,11 @@
     <div>{{ msg }}</div>
     <img :src="image" alt />
     <!-- url-loader在5.0.0默认开启了esModule=true .所以require语法需要手动default一下。 但是import引入的并不需要 -->
-    <img :src="require('./assets/image.png')" alt />
+    <img :src="require('@/assets/image.png').default" alt />
+    <img :src="require('@/assets/test.svg').default" alt="">
+    <svg aria-hidden="true">
+      <use :href="require('@/assets/test.svg').default"></use>
+    </svg>
   </div>
 </template>
 
@@ -30,6 +34,6 @@ export default {
 .success {
   color: red;
   /* css会自动解 default */
-  background:url('./assets/image.png'); 
+  background:url('~@assets/image.png'); 
 }
 </style>
