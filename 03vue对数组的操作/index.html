@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1.直接改写Array.prototype原型对象上的函数是不可取的，这样会影响到所有数组的方法.
+      //2.直接替换Array.prototype程序是被禁止的。内置对象的原型对象无法覆盖的
+      // 最终解决方法: 将原型对象存起来，对所有的实例组数做目标7个函数替换，然后再调用原生对象一次
+      const arrayProto = Array.prototype; // 获取Array的原型
+
+      function def(obj, key) {
+        Object.defineProperty(obj, key, {
+          enumerable: true,
+          configurable: true,
+          value: function (...args) {
+            console.log(key); // 控制台输出 push
+            console.log(args); // 控制台输出 [Array(2), 7, "hello!"]
+
+            //1. 获取原生的方法
+            let original = arrayProto[key];
+            //2. 将开发者的参数传给原生的方法，保证数组按照开发者的想法被改变
+            const result = original.apply(this, args);
+
+            //3. do something 比如通知Vue视图进行更新 dep.notify
+            console.log("我的数据被改变了，视图该更新啦");
+            this.text = "hello Vue";
+            return result;
+          },
+        });
+      }
+
+      // 新的原型
+      let obj = {
+        push() {},
+      };
+
+      // 重写赋值
+      def(obj, "push");//监听push
+
+      let arr = [0];
+
+      // 实例原型的指向重写
+      arr.__proto__ = obj;
+
+      // 执行push
+      arr.push([1, 2], 7, "hello!"); //执行时，会触发push
+      console.log(arr);
+    </script>
+  </body>
+</html>
