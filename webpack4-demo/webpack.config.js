@@ -1,6 +1,6 @@
 const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
-const { HotModuleReplacementPlugin } = require("webpack");
+const { HotModuleReplacementPlugin, DefinePlugin } = require("webpack");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 module.exports = {
   mode: "development",
@@ -15,10 +15,6 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.css$/,
-      //   use: [, "css-loader"],
-      // },
       {
         test: /\.vue$/,
         use: "vue-loader",
@@ -33,50 +29,44 @@ module.exports = {
           loader: "url-loader",
           options: {
             limit: false,
-            // esModule:false
+            // esModule:false //注意开关
           },
         },
       },
-      // {
-      //   test: /\.(png|jpg|gif)$/,
-      //   use: {
-      //     loader: "file-loader",
-      //     options: {
-           
-      //     },
-      //   },
-      // },
-      {
-        test: /\.exec\.js$/,
-        use: "script-loader",
-      },
-
       {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env"],
+            presets: ["@babel/preset-env"], //bable转换
           },
         },
       },
 
       {
         test: /\.css$/,
-        use: ["style-loader","vue-style-loader", "css-loader"],
+        use: ["style-loader", "vue-style-loader", "css-loader"],
       },
     ],
   },
-  // plugins: [new HotModuleReplacementPlugin(), new VueLoaderPlugin(), new BundleAnalyzerPlugin()],
-  plugins: [new HotModuleReplacementPlugin(), new VueLoaderPlugin()],
+  plugins: [
+    // new BundleAnalyzerPlugin(), //分析插件
+    new HotModuleReplacementPlugin(),
+    new VueLoaderPlugin(),
+    new DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("可以直接改写这个，但是在vue-cli中是不允许的"),
+      beijjing: JSON.stringify("北京"),
+    }),
+  ],
   externals: {
-    vue: "Vue",
+    vue: "Vue", //排除依赖
   },
-  resolve:{
-    alias:{
-      '@':path.resolve(__dirname,'src'),
-      '@assets':path.resolve(__dirname,'src/assets')
-    }
-  }
+  resolve: {
+    alias: {
+      //别名配置
+      "@": path.resolve(__dirname, "src"),
+      "@assets": path.resolve(__dirname, "src/assets"),
+    },
+  },
 };
