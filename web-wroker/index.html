@@ -19,12 +19,16 @@
      -->
     <script>
       const worker = new Worker("q.worker.js");
-        // postMessage就是主线程给Worker传递数据
-      worker.postMessage("Hello World");
-      worker.postMessage({ method: "echo", args: ["Work"] });
-      worker.onmessage=function(event){
-        console.log('接收到worker数据了',event)
-      }
+      // postMessage就是主线程给Worker传递数据
+      // worker.postMessage("Hello World");
+      // worker.postMessage({ method: "echo", args: ["Work"] });
+      // worker.onmessage = function (event) {
+      //   console.log("接收到worker数据了", event.data);
+      // };
+      setInterval(() => {
+        // self.postMessage('循环发送');
+        console.log(1);
+      }, 1000);
 
       // worker.terminate();//关掉了
     </script>
