@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      Web Worker可以为javascript创造多线程环境。计算密集型或高延迟的任务给worker线程，主线程负责UI交互仍然流畅，不会被阻塞或拖慢
+      worker线程一旦创建成功，就会始终运行，不会被主线程上的活动 打断。所以创建worker线程消耗资源，在不使用的情况下，建议关闭
+      特性:
+      1.同源限制:worker脚本文件必须与主线程同源
+      2.DOM限制:worker无法读取网页DOM对象，包括document，window。 但是可以用location和navigator对象
+      3.通信限制:worker线程和主线程不在同一个上下文环境，他们不能直接通信，必须通过消息完成
+      4.脚本限制:不能执行alert和conform方法，但是可以发ajax请求
+      5.worker不能读本地文件。不能打开本机文件系统(file://),它所加载的脚本，必须来自网络
+     -->
+    <script>
+      const worker = new Worker("q.worker.js");
+        // postMessage就是主线程给Worker传递数据
+      worker.postMessage("Hello World");
+      worker.postMessage({ method: "echo", args: ["Work"] });
+      worker.onmessage=function(event){
+        console.log('接收到worker数据了',event)
+      }
+
+      // worker.terminate();//关掉了
+    </script>
+  </body>
+</html>
