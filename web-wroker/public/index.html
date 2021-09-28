@@ -17,19 +17,25 @@
       4.脚本限制:不能执行alert和conform方法，但是可以发ajax请求
       5.worker不能读本地文件。不能打开本机文件系统(file://),它所加载的脚本，必须来自网络
      -->
+    <button onclick="test()">点击发送请求</button>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/eruda@2.4.1/eruda.min.js"
+    ></script>
+    <script></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+      eruda.init();
       const worker = new Worker("q.worker.js");
-      // postMessage就是主线程给Worker传递数据
-      // worker.postMessage("Hello World");
+      // console.log(axios);
+      function test() {
+        // postMessage就是主线程给Worker传递数据
+        worker.postMessage("启动请求");
+      }
       // worker.postMessage({ method: "echo", args: ["Work"] });
-      // worker.onmessage = function (event) {
-      //   console.log("接收到worker数据了", event.data);
-      // };
-      setInterval(() => {
-        // self.postMessage('循环发送');
-        console.log(1);
-      }, 1000);
-
+      worker.onmessage = function (event) {
+        console.log("接收到worker数据了", event.data);
+      };
       // worker.terminate();//关掉了
     </script>
   </body>

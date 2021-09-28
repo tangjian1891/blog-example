@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      只要worker初始化后。worker的初始化并不是同步的，可以理解worker init被放入了event
+   主线程阻塞时，并不会干扰worker的运行。 但是对于用户ui操作事件点击体验下降。
+
+   -->
+    <button onclick="foo()">点击后阻塞线程</button>
+    <script>
+      const worker = new Worker("zuse.worker.js"); //worker不算主线程，所以会让主线程优先执行完后，才执行worker
+
+      function foo() {
+        // 主线程开始阻塞操作
+        let index = 0;
+        console.time();
+        // 根据自己电脑性能，调节时间
+        // while (index < 1000000000 * 5) {
+        //   index++;
+        // }
+        console.log("结束了");
+        // console.log(index);
+        console.timeEnd();
+      }
+      foo();
+    </script>
+  </body>
+</html>
