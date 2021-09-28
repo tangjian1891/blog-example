@@ -1,4 +1,7 @@
 this.window = {}; //模拟对象，便于挂载axios
+
+ 
+
 // let str = importScripts("./axios.min.js");
 let str = importScripts("https://cdn.jsdelivr.net/npm/axios@0.21.4/dist/axios.min.js");
 console.log(window.axios);

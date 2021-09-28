@@ -22,10 +22,15 @@
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/eruda@2.4.1/eruda.min.js"
     ></script>
-    <script></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       eruda.init();
+      // 跨域加载worker.js
+      // var blob = new Blob(['importScripts("https://cdn.jsdelivr.net/npm/pdfjs-dist@2.0.943/build/pdf.worker.min.js")'], {
+      //   type: "application/javascript",
+      // });
+      // var blobUrl = window.URL.createObjectURL(blob);
+      // let pdfjsWorker = new Worker(blobUrl);
+
       const worker = new Worker("q.worker.js");
       // console.log(axios);
       function test() {
