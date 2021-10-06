@@ -1,5 +1,4 @@
 const express = require("express");
-const formidable = require("formidable");
 const app = express();
 
 const formidableMiddleware = require("express-formidable");

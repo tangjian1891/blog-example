@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="go()">点击一下，worker就开始执行阻塞运算</button>
+    <!-- 
+    如果将循环操作放入worker中，那么点击按钮将会非常顺畅
+   -->
+    <script>
+      const worker = new Worker("feizuse.worker.js");
+      function go() {
+        console.log("让worker执行");
+        worker.postMessage("执行吧");
+      }
+      setInterval(() => {
+        console.log(1);
+      }, 1000);
+    </script>
+  </body>
+</html>
