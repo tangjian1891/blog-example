@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script  async src="/getJs.js"></script>
+
+    <!-- <link rel="prefetch" href="/getCss2.css"  as="style"> -->
+    <!-- <link rel="preload" href="/getCss2.css"  as="style"> -->
+    <style>
+      h1 {
+        color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>加载文件资源</h1>
+    <script async  src="/getJs1.js"></script>
+    <script>
+      console.log("能打印出来吗");
+    </script>
+    <link rel="stylesheet" href="/getCss1.css" />
+  </body>
+</html>
