@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="send()">发送</button>
+    <!-- 
+    ajax发送get请求 会自动忽略请求体(也就是axios的data参数),也忽略 Content-type
+    axios的params请求，就是query 参数了，Query 查询参数，自动拼在url上
+   -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      function send() {
+        axios.request({
+          url: "/test/api",
+          method: "get",
+          header:{
+            'Content-type':"application/x-www-form-urlencoded"
+          },
+          data: {
+            address: "北京",
+            age: 20,
+          },
+          params:{
+            address: "北京",
+            age: 20,
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

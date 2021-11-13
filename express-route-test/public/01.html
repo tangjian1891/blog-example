@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- form
+    表单请求默认：get 请求时，enctype被锁定为（application/x-www-form-urlencoded ），所以不会支持file控件
+    enctype默认：application/x-www-form-urlencoded 
+    get请求中 所有的key=value字段都会追加到url上，并被urlEncode
+
+    注意:如果在普通form表单提交中有file控件，那么会自动忽略file实际内容，只能file的value值仅为文件名称
+    在浏览器中，是没有请求体的，但是会有一个 Query String Parameters ,实际上就是url上?之后的key=value
+    -->
+    <form action="/haha/qwer/do" enctype="multipart/form-data">
+      <input type="text" name="address" />
+      <input type="text" name="age" />
+      <input type="file" name="file" id="" />
+      <input type="submit" value="提交" />
+    </form>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script></script>
+  </body>
+</html>
