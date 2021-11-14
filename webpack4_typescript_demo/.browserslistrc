@@ -1,0 +1,3 @@
+# 可以被 autoprefixer @babel/preset-env stylelint eslint-plugin-conmpat共享 
+Android >= 5
+iOS >= 9
