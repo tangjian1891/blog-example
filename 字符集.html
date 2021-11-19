@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      阮一峰 http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html
+      汉字对应unicode表   http://www.chi2ko.com/tool/CJK.htm  默认就是16进制的
+      
+      三种转换
+      https://www.qqxiuzi.cn/bianma/utf-16.htm
+      https://www.qqxiuzi.cn/bianma/utf-8.htm
+      https://www.qqxiuzi.cn/bianma/Unicode.htm
+
+      https://www.qqxiuzi.cn/bianma/ascii.htm
+
+
+      ascii编码。仅占1字节。范围1-256的映射。 a-zA-z0-9。就是最简单的映射关系,可以对中文完全没办法， 中文太多了
+      unicode字符集。现规模容纳100W+字符。 超大0-66536的范围。可以装下好多汉字
+     -->
+    <!-- //流数据分两种 :字符流        字节流(二进制,按字节操作)
+      文本流:流数据以字符的形式出现。
+      二进制流:二进制表示 
+      65535 2个字节   charCodeAt返回一个Unicode编码.标识给定索引处的UTF-16代码单元
+      String.fromCharCode(30721) 返回指定UTF-16单元的字符串
+    -->
+    <!-- 十进制就是 16进制就是utf8    10进制就是30721 -->
+    <!-- 
+      unicode万国码,默认四个字节。  \u开头就表明是跟unicode编码相关,后面的就是16进制了。不够的就用0补
+      &#十进制    &#x十六进制
+      UTF-8 基于unicode的，动态大小1-4个字节. （单字节码元）
+      UTF-16 固定使用2字节或4字节表示（是unicode的默认方式）
+
+      字符 1  
+      unicode 00000031  \u0031          charCodeAt 返回Unicode   49
+      utf8    31
+      utf16   FEFF0031
+      字符对应的UTF8字节流      Uint8Array  [49]
+
+      字符 码
+      unicode/UTF16    30721    \u7801        charCodeAt  返回Unicode   30721 
+      UTF8             &#x7801;    根据不同的范围，使用不同长度的编码。         带x就是10进制
+      字符对应的UTF8字节流      Uint8Array [231,160,129]
+     -->
+    <script>
+      let str = "码";
+      const encode = new TextEncoder();
+      const encodeStr = encode.encode(str); //相当于 const uint8 = new Uint8Array([231, 160, 129]);   使用UTF-8字节流作为输出   Uint8Array [229,147,136]
+      console.log(encodeStr);
+      const ab = new ArrayBuffer(3);
+      console.log(ab);
+      const uint8 = new Uint8Array([231, 160, 129]); //字节流
+      console.log(uint8);
+      const decode = new TextDecoder();
+      const str2 = decode.decode(uint8);
+      
+      // \u7801
+    </script>
+  </body>
+</html>
