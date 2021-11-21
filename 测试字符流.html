@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // DOMString中是UTF-16编码。如果字符超过2字节，就会报错。比如：中文
+      // window.btoa 多数浏览器，直接对字符使用编码base64都会InvalidCharacterError
+      let Base64 = {
+        encode(str) {
+          // first we use encodeURIComponent to get percent-encoded UTF-8,
+          // then we convert the percent encodings into raw bytes which
+          // can be fed into btoa.
+          return btoa(
+            encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
+              return String.fromCharCode("0x" + p1);
+            })
+          );
+        },
+        decode(str) {
+          // Going backwards: from bytestream, to percent-encoding, to original string.
+          return decodeURIComponent(
+            atob(str)
+              .split("")
+              .map(function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+        },
+      };
+      // ucs-2 string to base64 encoded ascii
+      function utoa(str) {
+      
+        return window.btoa(decodeURI(encodeURIComponent(str)));
+      }
+      // base64 encoded ascii to ucs-2 string
+      function atou(str) {
+        return decodeURIComponent(escape(window.atob(str)));
+      }
+
+      const bf = new ArrayBuffer(10); //二进制缓存区，byte array字节数组
+      console.log(bf);
+      const view = new DataView(bf);
+
+      // 将字符串转为code point
+      // 字符串直接转为二进制
+
+      const encode = new TextEncoder(); //产出utf8的字节流作为输出
+      let bf2 = encode.encode("码");
+      console.log(bf2); //[231,160,129]  这是utf8的字节流
+
+      console.log(Base64.encode("哈哈"));
+      console.log(utoa("哈哈"));
+      console.log(window.btoa("哈哈"));
+      transform("一");
+
+      function transform(origin) {
+        console.log("当前源字符为", origin);
+        console.log("编译为二进制数组", encode.encode(origin));
+        const b = new Blob([origin]);
+        b.arrayBuffer().then((res) => {
+          console.log(res, "直接将字符放入blob转arraybuffer后");
+        });
+        let base64Str = window.btoa(origin);
+        console.log("base64编码", base64Str);
+        console.log("base64解码", window.atob(base64Str));
+      }
+
+      let encoded = Base64.encode("哈ha"); // "5ZOIaGE="
+      let decoded = Base64.decode(encoded); // "哈ha"
+ 
+    </script>
+  </body>
+</html>

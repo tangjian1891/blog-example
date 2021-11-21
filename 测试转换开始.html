@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="file" onchange="foo(this)" />
+    <script>
+      // 字节流Buffer（操作的是8位的单个字节）->字符流(操作的是16位的字符)
+      // 字符流分为各种各样的进制标识。 例如:码点97  使用    使用unicode utf-8为'a'，使用base64为YQ==
+      //
+      function foo2(file) {
+        console.log(file);
+        file.arrayBuffer().then((res) => {
+          console.log("file对应的二进制", res);
+        });
+        const fr = new FileReader();
+        fr.onload = function (e) {
+          const text = e.target.result;
+          console.log("arraybuffer", text);
+        };
+        fr.readAsArrayBuffer(file);
+      }
+
+      function foo3(file) {
+        const fr = new FileReader();
+        fr.onload = function (e) {
+          const text = e.target.result;
+          console.log("readAsText", text);
+          const encode = new TextEncoder();
+          console.log(encode.encode(text));
+        };
+        fr.readAsText(file);
+      }
+
+      function foo(e) {
+        const file = e.files[0];
+        foo2(file);
+        foo3(file);
+        const fr = new FileReader();
+        fr.onload = function (e) {
+          const text = e.target.result;
+          console.log(text);
+          handleDataURL(text);
+        };
+
+        //  fr.readAsText(file);//这就，文件对象内容的 文本形式，如果是.txt那就是输入的，如果是图片，一定就是所谓的乱码了
+        // 乱码不行啊，要人能认清符号才行啊。把每个符号对用的unicode码点值，做base64(64进制转换)
+        // 注意:直接使用window.btoa转text文本为base64行不通。btoa不能转超过unicode 255码点的符号
+        // 但是我们可以将base64反转为普通text符号。普通符号可以使用textEncode转为ArrayBuffer字节流。
+        // 字节流又可以直接放入blob。 file继承与Blob，再使用URL.createObejctURL改为下载地址.
+
+        fr.readAsDataURL(file);
+      }
+
+      function handleDataURL(DataURL) {
+        // 取类型和data数据 data:image/jpeg;base64,iVBOR
+        const [res, data] = DataURL.split(";base64,");
+        const [protocol, type] = res.split(":");
+        // console.log(protocol, type, data);
+        // 把data的base64转为普通text
+        let text = window.atob(data); //标准字符
+
+        //  text ="ab"
+        console.log("base64转出来的字符", text);
+        // console.log(text); //普通文本，这个与记事本打开文件看到的一样(记事本打开图片也是可以的)
+        let length = text.length;
+        const ab = new ArrayBuffer(length);
+        let n = 0;
+        let arr = [];
+        while (n < length) {
+          console.log(text[n],text[n].charCodeAt());
+          arr[n] = text[n].charCodeAt();
+          n++;
+        }
+        const targetText = new Uint8Array(arr);
+        console.log("targetText", targetText);
+
+        // const blob = new Blob([unit8]);
+        const blob = new Blob([targetText]);
+        console.log(blob);
+        const file = new File([blob], "image.png", { type });
+        console.log(file);
+        const url = URL.createObjectURL(file);
+        console.log(url);
+        // 用原文本直接转arraybuffer，或者用base64解码后，一个一个取unicode值.
+        // base64解码后就一个一个的二进制单字节 。此函数无法解析汉字。
+      }
+    </script>
+  </body>
+</html>
