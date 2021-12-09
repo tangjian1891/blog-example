@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="send()">发送</button>
+    <!-- 
+    手动设置为post请求，此时content-type比较重要了.
+    
+    当数据为application/json时， body体叫 Request Payload（请求负载） 
+    如果data为纯plain对象。那么 "Content-type": "application/json",
+    如果data为qs库转换过，那么会默认设置成 application/x-www-form-urlencoded ,符合 key=value&的结构就会自动检测
+    如果data是FormData对象，那么content-type自动设置为 multipart/form-data
+   -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qs@6.10.1/dist/qs.js"></script>
+    <script>
+      console.log(Qs.stringify({name:"哈哈"}))
+      function send() {
+ 
+        const fm= new  FormData()
+        axios.request({
+          url: "/test/api",
+          method: "post",
+          header: {
+            "Content-type": "application/json",
+          },
+          data: fm,
+          params: {
+            address: "北京",
+            age: 20,
+          },
+        });
+      }
+    </script>
+  </body>
+</html>
