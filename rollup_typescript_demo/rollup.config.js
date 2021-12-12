@@ -14,11 +14,12 @@ export default {
     commonjs(),
     resolve(),
     typescript(),
-    server({
-      contentBase: "",
-      port:3000
-    }),
+    // server({
+    //   contentBase: "",
+    //   port:3000
+    // }),
   ],
+  // external:['nice-js-tools']
 };
 
 // 所有的三方包，rollup是不会默认resolve的，需要使用@rollup/plugin-node-resolve这个包才能从node_modules中找到。
